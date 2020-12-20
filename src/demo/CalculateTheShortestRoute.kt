@@ -9,7 +9,7 @@ fun main() {
         parsedgraph.add(node)
     }
     calculateTheShortestRoute(parsedgraph, "A", "C")
-    println(lengthOfEveryRoute)
+    println(lengthOfEveryRoute.min())
 }
 
 fun calculateTheShortestRoute(parsedgraph: MutableList<Node>, start: String, end: String) {

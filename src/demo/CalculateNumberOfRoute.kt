@@ -5,10 +5,12 @@ fun main() {
         val node = Node()
         node.startPoint = it[0].toString()
         node.endPoint = it[1].toString()
+        node.length = it[2].toInt() - '0'.toInt()
         parsedgraph.add(node)
     }
-    calculateNumberOfRouteWithMaximumStops(parsedgraph, "C", "C")
+//    calculateNumberOfRouteWithMaximumStops(parsedgraph, "C", "C")
 //    calculateNumberOfRouteWithExactlyStops(parsedgraph, "A", "C")
+    calculateNumberOfRouteWithMaximumDistance(parsedgraph, "C", "C")
     println(numberOfmethods)
 }
 
@@ -54,8 +56,33 @@ fun calculateNumberOfRouteWithExactlyStops(parsedgraph: MutableList<Node>, start
     }
 }
 
+fun calculateNumberOfRouteWithMaximumDistance(parsedgraph: MutableList<Node>, start: String, end: String) {
+    parsedgraph.forEach {
+        if (it.startPoint == start && lengthOfOneRoute < 30 - it.length) {
+            temporaryRoute.add(it.startPoint)
+            lengthOfOneRoute += it.length
+            if (it.endPoint == end) {
+                temporaryRoute.add(it.endPoint)
+                numberOfmethods++
+                if (lengthOfOneRoute < 30) {
+                    temporaryRoute.removeAt(temporaryRoute.size - 1)
+                    calculateNumberOfRouteWithMaximumDistance(parsedgraph, it.endPoint, end)
+                }
+                temporaryRoute.removeAt(temporaryRoute.size - 1)
+                lengthOfOneRoute -= it.length
+                return@forEach
+
+            }
+            calculateNumberOfRouteWithMaximumDistance(parsedgraph, it.endPoint, end)
+            temporaryRoute.removeAt(temporaryRoute.size - 1)
+            lengthOfOneRoute -= it.length
+        }
+    }
+}
+
 val temporaryRoute: MutableList<String> = mutableListOf()
 var numberOfmethods = 0
+val resultRoute = mutableListOf<MutableList<String>>()
 
 class Node{
     var startPoint: String = ""
