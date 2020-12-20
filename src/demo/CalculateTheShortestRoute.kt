@@ -37,6 +37,3 @@ fun calculateTheShortestRoute(parsedgraph: MutableList<Node>, start: String, end
         temporaryRoute.removeAt(temporaryRoute.size - 1)
     }
 }
-
-var lengthOfOneRoute = 0
-val lengthOfEveryRoute = mutableListOf<Int>()

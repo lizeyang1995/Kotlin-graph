@@ -77,12 +77,3 @@ fun calculateNumberOfRouteWithMaximumDistance(parsedgraph: MutableList<Node>, st
         }
     }
 }
-
-val temporaryRoute: MutableList<String> = mutableListOf()
-var numberOfmethods = 0
-
-class Node{
-    var startPoint: String = ""
-    var endPoint: String = ""
-    var length: Int = 0
-}
