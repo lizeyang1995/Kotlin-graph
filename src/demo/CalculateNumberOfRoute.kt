@@ -15,20 +15,19 @@ fun main() {
 }
 
 fun calculateNumberOfRouteWithMaximumStops(parsedgraph: MutableList<Node>, start: String, end: String) {
-    for (index in 0 until parsedgraph.size) {
-        val node = parsedgraph.get(index)
-        if (node.startPoint == start) {
-            temporaryRoute.add(node.startPoint)
-            if (node.endPoint == end) {
-                temporaryRoute.add(node.endPoint)
+    parsedgraph.forEach {
+        if (it.startPoint == start) {
+            temporaryRoute.add(it.startPoint)
+            if (it.endPoint == end) {
+                temporaryRoute.add(it.endPoint)
                 if (temporaryRoute.size <= 4) {
                     numberOfmethods ++
                 }
                 temporaryRoute.removeAt(temporaryRoute.size - 1)
                 temporaryRoute.removeAt(temporaryRoute.size - 1)
-                continue
+                return@forEach
             }
-            calculateNumberOfRouteWithMaximumStops(parsedgraph, node.endPoint, end)
+            calculateNumberOfRouteWithMaximumStops(parsedgraph, it.endPoint, end)
         }
     }
     if (temporaryRoute.size > 0) {
@@ -37,18 +36,17 @@ fun calculateNumberOfRouteWithMaximumStops(parsedgraph: MutableList<Node>, start
 }
 
 fun calculateNumberOfRouteWithExactlyStops(parsedgraph: MutableList<Node>, start: String, end: String) {
-    for (index in 0 until parsedgraph.size) {
-        val node = parsedgraph.get(index)
-        if (node.startPoint == start && temporaryRoute.size <= 4) {
-            temporaryRoute.add(node.startPoint)
-            if (node.endPoint == end && temporaryRoute.size == 4) {
-                temporaryRoute.add(node.endPoint)
+    parsedgraph.forEach {
+        if (it.startPoint == start && temporaryRoute.size <= 4) {
+            temporaryRoute.add(it.startPoint)
+            if (it.endPoint == end && temporaryRoute.size == 4) {
+                temporaryRoute.add(it.endPoint)
                 numberOfmethods ++
                 temporaryRoute.removeAt(temporaryRoute.size - 1)
                 temporaryRoute.removeAt(temporaryRoute.size - 1)
-                continue
+                return@forEach
             }
-            calculateNumberOfRouteWithExactlyStops(parsedgraph, node.endPoint, end)
+            calculateNumberOfRouteWithExactlyStops(parsedgraph, it.endPoint, end)
         }
     }
     if (temporaryRoute.size > 0) {
@@ -82,7 +80,6 @@ fun calculateNumberOfRouteWithMaximumDistance(parsedgraph: MutableList<Node>, st
 
 val temporaryRoute: MutableList<String> = mutableListOf()
 var numberOfmethods = 0
-val resultRoute = mutableListOf<MutableList<String>>()
 
 class Node{
     var startPoint: String = ""

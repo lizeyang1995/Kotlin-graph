@@ -17,21 +17,20 @@ fun calculateTheShortestRoute(parsedgraph: MutableList<Node>, start: String, end
         temporaryRoute.removeAt(temporaryRoute.size - 1)
         return
     }
-    for (index in 0 until parsedgraph.size) {
-        val node = parsedgraph[index]
-        if (node.startPoint == start) {
-            temporaryRoute.add(node.startPoint)
-            lengthOfOneRoute += node.length
-            if (node.endPoint == end) {
-                temporaryRoute.add(node.endPoint)
+    parsedgraph.forEach {
+        if (it.startPoint == start) {
+            temporaryRoute.add(it.startPoint)
+            lengthOfOneRoute += it.length
+            if (it.endPoint == end) {
+                temporaryRoute.add(it.endPoint)
                 lengthOfEveryRoute.add(lengthOfOneRoute)
                 temporaryRoute.removeAt(temporaryRoute.size - 1)
                 temporaryRoute.removeAt(temporaryRoute.size - 1)
-                lengthOfOneRoute -= node.length
-                continue
+                lengthOfOneRoute -= it.length
+                return@forEach
             }
-            calculateTheShortestRoute(parsedgraph, node.endPoint, end)
-            lengthOfOneRoute -= node.length
+            calculateTheShortestRoute(parsedgraph, it.endPoint, end)
+            lengthOfOneRoute -= it.length
         }
     }
     if (temporaryRoute.size > 0) {
